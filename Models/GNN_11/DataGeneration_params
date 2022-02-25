@@ -1,0 +1,34 @@
+dirname = 'GLOBAL_n'
+elem_type = "quad" # "tri" or "quad"
+bound_x = (0.0, 2.0)
+bound_y = (-0.5, 0.5)
+E = 200e9
+v = 0.3
+ 
+force_dofs = [0, 1]
+applied_force_vals = [0, -1e7]
+body_force = [0.0, 0.0]
+ 
+# Data / training parameters.
+num_data_loops = 25
+fetch_size = 100 # the number of fea examples in each file
+data_size_tr = fetch_size
+batch_size_tr = 1 #keep 1
+m1_min_max_tr = (8, 9) #integer
+m2_min_max_tr = (4, 5) #integer
+refine_fact_tr = (0.0, 0.5) # for tri only, n_elem = (2+fract)*(m1 * m2) 
+# Mesh Noise
+if elem_type == "tri" :
+  coord_noise_min_max_tr = (0.0, 0.1)#float, over 0.25 gets crazy
+else :
+  coord_noise_min_max_tr = (0.0, 0.2) #float, over 0.4 gets crazy
+noise_type_tr = "row" # "posi" or "row" 
+vol_frac_min_max = (1.0, 1.0) 
+density_min_max = (1.0, 1.0) 
+multiscale_min_max_m1 = (4, 9) # must be at least 4
+multiscale_min_max_m2 = (4, 9) # must be at least 4
+force_scale = (-1.0, 1.0)
+ 
+support_options = ["left_cantilever"] # ["left_cantilever", "right_cantilever", "dual_cantilever", "MBB"]
+force_options = ["side_center"] # ["side_center", "side_bottom", "side_top", "top_center", "top_distributed"]
+multi_fidelity_opt, KUR_opt, random_bound_opt, random_force_opt = False, False, False, False
